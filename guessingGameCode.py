@@ -3,6 +3,8 @@ import random
 def guessingGame(maxGuesses=5):
     gameNumber = random.randint(1,100)
     guesses=maxGuesses
+    proximityBank = 0
+    finalScore = 0
     while guesses > 0:
         userInput = input("Please type in a number: ")
         try:
@@ -13,7 +15,8 @@ def guessingGame(maxGuesses=5):
             elif number == gameNumber:
                 print(f"Thats the correct number with {guesses}")
                 if abs(gameNumber-number) == 0:
-                    print(f"Score is {(guesses*100)-abs(gameNumber-number)}")
+                    finalScore = 100 + (guesses*250) + proximityBank
+                    print(f"Final Score is {finalScore}")
                 return True
             
             guesses -=1
@@ -24,6 +27,9 @@ def guessingGame(maxGuesses=5):
                 print("Too low")
             else:
                 print("Too high")
+            prox = 100-abs(gameNumber-number)
+            proximityBank += prox
+            print(proximityBank)
             
             if guesses > 0:
                 print(f"You have {guesses} left")
