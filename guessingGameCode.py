@@ -11,7 +11,7 @@ highScore = 0
 # Function for calculating the final score of a game
 # with the number of remaining guesses and the total accumulation of accuracy for each round played
 def scoringSystem(remaining_guesses, bank):
-    score = 100 + (remaining_guesses* 250) + bank
+    score = (remaining_guesses* 250) + bank
     return score
 
 # Function to show a summary of stats of the round just played
