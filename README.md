@@ -1,6 +1,9 @@
 # Rockborne Week 5 Project - Guessing Game
 A terminal-based game where a player must guess the secret number within 8 guesses using hints, and is scored by how quickly and accurately their guesses are
 
+## Repositiory Link
+https://github.com/noahboiiii/Rockborne-Week-5-Project.git
+
 ## Key Features
 Dynamic Scoring - Score is calculated using the formula ***(remaining_guesses x 250) + bank***
 - ***remaining_guesses*** represents the number of guesses left when either the player guesses the number or defaults to 0 when the player is unable to guess the number
