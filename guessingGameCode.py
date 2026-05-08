@@ -32,9 +32,12 @@ def guessPluralise(count):
 # Function for
 #   - updating the total score for the session
 #   - comparing the high score and final score and updating the high score if the final score is higher       
-def scoreUpdate(final, high):
+def scoreUpdate(final):
+    global scoreAccumulated, highScore 
     scoreAccumulated+=final
-    if final>high:
+    if highScore == 0:
+        highScore=final
+    if final>highScore:
         high=final    
 
 # Main function where the guessing game logic is conducted
@@ -63,8 +66,8 @@ def guessingGame(gameNumber, maxGuesses):
                 # Calculates the final score when the player guesses the number using the scoringSystem function defined above 
                 finalScore = scoringSystem(guesses, proximityBank)
                 # Updates the total score and high score using scoreUpdate()
-                scoreUpdate(finalScore, highScore)
-                print(f"\nYour final Score is {finalScore}")
+                scoreUpdate(finalScore)
+                print(f"\nYou scored {finalScore} in this round")
                 # Shows the round stats using summaryStats()
                 summaryStats()
                 return True
@@ -78,9 +81,10 @@ def guessingGame(gameNumber, maxGuesses):
             else:
                 # Calculates the final score when the player doesn't guess the number using the scoringSystem function defined above
                 finalScore = scoringSystem(guesses, proximityBank)
-                print(f"Unlucky, the number was: {gameNumber}")
+                print(f"\nINCORRECT\n\nUnlucky, the number was: {gameNumber}")
                 # Updates the total score and high score using scoreUpdate()
-                scoreUpdate(finalScore, highScore)
+                scoreUpdate(finalScore)
+                print(f"\nYou scored {finalScore} in this round")
                 # Shows the round stats using summaryStats()
                 summaryStats()
                 break
