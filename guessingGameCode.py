@@ -35,10 +35,8 @@ def guessPluralise(count):
 def scoreUpdate(final):
     global scoreAccumulated, highScore 
     scoreAccumulated+=final
-    if highScore == 0:
-        highScore=final
     if final>highScore:
-        highScore=final    
+        highScore=final
 
 # Main function where the guessing game logic is conducted
 def guessingGame(gameNumber, maxGuesses):
