@@ -54,7 +54,7 @@ def guessingGame(gameNumber, maxGuesses):
     while guesses > 0:
         print(f"\n--- GUESS {9-guesses} ---\n")
         # Validating the user guess to ensure only integers between 1 and 100 are entered
-        userInput = input("Please type in a number: ")
+        userInput = input("Please type in a number between 1 and 100: ")
         try:
             number = int(userInput)
             if number > 100 or number < 1:
