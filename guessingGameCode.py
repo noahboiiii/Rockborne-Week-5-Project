@@ -5,10 +5,11 @@ import random
 # Total points earned
 # Highest score
 gamesPlayed = 0
-PointsEarned = 0
+scoreAccumulated = 0
 highScore = 0
 
 # Function for calculating the final score of a game
+# with the number of remaining guesses and the total accumulation of accuracy for each round played
 def scoringSystem(remaining_guesses, bank):
     score = 100 + (remaining_guesses* 250) + bank
     return score
@@ -17,7 +18,7 @@ def scoringSystem(remaining_guesses, bank):
 def summaryStats():
     print("\n--- SESSION SUMMARY ---")
     print(f"Games Played: {gamesPlayed}")
-    print(f"Total Points: {PointsEarned}")
+    print(f"Total Points: {scoreAccumulated}")
     print(f"Personal Best: {highScore}")
     print("-----------------------\n")
 
@@ -28,13 +29,21 @@ def guessPluralise(count):
     else:
         return "guesses"
 
+# Function for
+#   - updating the total score for the session
+#   - comparing the high score and final score and updating the high score if the final score is higher       
+def scoreUpdate(final, high):
+    scoreAccumulated+=final
+    if final>high:
+        high=final    
+
 # Main function where the guessing game logic is conducted
-def guessingGame(gameNumber, maxGuesses=5):
+def guessingGame(gameNumber, maxGuesses):
     
     # Established the variables as global to ensure they can be updated for session-level stats
-    global gamesPlayed, PointsEarned, highScore
+    global gamesPlayed, scoreAccumulated, highScore
     gamesPlayed+=1
-    
+    # Established seperate guess variable to the maxGuesses to symbolise number of guesses used by the player
     guesses=maxGuesses
     # Variable for accumulating the accuracy of the player's guesses compared to the actual number for the whole game
     proximityBank = 0
@@ -51,34 +60,42 @@ def guessingGame(gameNumber, maxGuesses=5):
             # Logic for the user guessing the correct number
             elif number == gameNumber:
                 print(f"\nCORRECT\n\nGood job, You guessed correctly with {guesses} {guessPluralise(guesses)} remaining")
+                # Calculates the final score when the player guesses the number using the scoringSystem function defined above 
                 finalScore = scoringSystem(guesses, proximityBank)
-                PointsEarned+=finalScore
-                if finalScore>highScore:
-                    highScore=finalScore
+                # Updates the total score and high score using scoreUpdate()
+                scoreUpdate(finalScore, highScore)
                 print(f"\nYour final Score is {finalScore}")
+                # Shows the round stats using summaryStats()
                 summaryStats()
                 return True
             
+            # Decrements the guesses each attempt
             guesses -=1
-
+            
             if guesses > 0:
                 print(f"\nYou have {guesses} {guessPluralise(guesses)} left")
+            #Logic for the user being unable to guess the correct number
             else:
+                # Calculates the final score when the player doesn't guess the number using the scoringSystem function defined above
                 finalScore = scoringSystem(guesses, proximityBank)
                 print(f"Unlucky, the number was: {gameNumber}")
-                if finalScore>highScore:
-                    highScore=finalScore
-                PointsEarned += finalScore
+                # Updates the total score and high score using scoreUpdate()
+                scoreUpdate(finalScore, highScore)
+                # Shows the round stats using summaryStats()
                 summaryStats()
                 break
 
+            # Logic for hints
             if number < gameNumber:
                 print("\nINCORRECT\n\nHint: Too low!")
             else:
                 print("\nINCORRECT\n\nHint: Too high!")
+            # Value repesenting how far the player's guess was to the actual number
             prox = 100-abs(gameNumber-number)
+            # Increments the proximityBank value with the proximity value
             proximityBank += prox
-            
+        
+        #Catching ValueErrors and returning appropriate response    
         except ValueError:
             print("Not an integer try again")
     return False
@@ -93,6 +110,7 @@ while True:
     #Input is converted to lower case for easier text validation
     choice = input("Another? (y/n): ").lower()
     
+    # Choice for the user to continue with 'y' only or quit with any other input
     if choice != 'y':
         print("Thanks for playing")
         break
