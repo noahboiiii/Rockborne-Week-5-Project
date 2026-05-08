@@ -38,7 +38,7 @@ def scoreUpdate(final):
     if highScore == 0:
         highScore=final
     if final>highScore:
-        high=final    
+        highScore=final    
 
 # Main function where the guessing game logic is conducted
 def guessingGame(gameNumber, maxGuesses):
